@@ -1,0 +1,25 @@
+{
+  "name": "adapt.chat",
+  "version": "1.0.0",
+  "description": "The NPM library for interacting with the adapt.chat API.",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AdaptChat/adapt.js.git"
+  },
+  "keywords": [
+    "adapt",
+    "adapt.chat",
+    "adapt.js",
+    "chatapp"
+  ],
+  "author": "Bryden Calaway, Adapt.chat",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AdaptChat/adapt.js/issues"
+  },
+  "homepage": "https://github.com/AdaptChat/adapt.js#readme"
+}
