@@ -2,6 +2,7 @@ import { Client } from "../client/Client";
 import { Channel } from "../structure/Channel";
 import { Guild } from "../structure/Guild";
 import { Message } from "../structure/Message";
+import { User } from "../structure/User";
 
 /***
  * @typedef {Object} ClientConfig
@@ -12,6 +13,7 @@ export interface ClientConfig {
   api: string;
   cdn: string;
   gateway: string;
+  status: string;
 }
 
 /***
@@ -134,7 +136,7 @@ export interface IMessage {
   nonce: string | null;
   channel_id: number;
   author_id: number;
-  author: IUser;
+  author: User;
   type: string;
   content: string;
   embeds: MessageEmbed[];

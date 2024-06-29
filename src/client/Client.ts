@@ -1,7 +1,7 @@
 import { EventEmitter2, Listener, ListenerFn, OnOptions } from "eventemitter2";
 import { chooseClient, WebsocketClient } from "./WebsocketClient";
 import { ClientOptions, EventMap } from "../types";
-import { API, CDN, GATEWAY } from "../config";
+import { API, CDN, GATEWAY, STATUS } from "../config";
 import { ClientUser } from "../structure/ClientUser";
 import { GuildCollection } from "../collections/GuildCollection";
 import { ChannelCollection } from "../collections/ChannelCollection";
@@ -20,6 +20,7 @@ export class Client extends EventEmitter2 {
     api: API,
     cdn: CDN,
     gateway: GATEWAY,
+    status: STATUS,
   };
 
   /**
@@ -165,6 +166,7 @@ export class Client extends EventEmitter2 {
       this.config.api = options.config.api ?? this.config.api;
       this.config.cdn = options.config.cdn ?? this.config.cdn;
       this.config.gateway = options.config.gateway ?? this.config.gateway;
+      this.config.status = options.config.status ?? this.config.status;
     }
 
     this.ws = chooseClient(this);

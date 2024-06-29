@@ -14,6 +14,11 @@ export const CDN = "https://convey.adapt.chat";
 export const GATEWAY = "https://harmony.adapt.chat";
 
 /**
+ * The default STATUS that the bot will have.
+ */
+export const STATUS = "online";
+
+/**
  * List of opcodes used for interacting with Adapt.
  */
 export enum OpCodes {
@@ -42,6 +47,10 @@ export enum OpCodes {
    * Op code used for sending a heartbeat to Harmony.
    */
   MESSAGE_CREATE = "message_create",
+  /**
+   * Op code used for updating the client's presence.
+   */
+  PRESENCE = "update_presence",
 }
 
 /**

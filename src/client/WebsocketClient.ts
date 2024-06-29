@@ -1,15 +1,16 @@
 import WebSocket from "isomorphic-ws";
 import { OpCodes } from "../config";
-import { Events, IChannel, IGuild, IMessage } from "../types";
+import { Events, IChannel, IGuild, IMessage, IUser } from "../types";
 import { Client } from "./Client";
 import { ClientUser } from "../structure/ClientUser";
 import { Message } from "../structure/Message";
 import { Channel } from "../structure/Channel";
 import { Guild } from "../structure/Guild";
+import { User } from "../structure/User";
 
 export interface WebsocketClient {
   connect(): Promise<void>;
-  send({ op, data }: { op: OpCodes; data: any }): Promise<void>;
+  send({ data }: { data: any }): Promise<void>;
 }
 
 export function chooseClient(client: Client): WebsocketClient {
@@ -76,12 +77,14 @@ export class WebsocketNodeClient implements WebsocketClient {
           this.client.emit("ready", data);
           break;
         case OpCodes.MESSAGE_CREATE:
-          let messageData = data.message as IMessage;
+          let messageData = data.message;
           let channel = this.client.channels.get(messageData.channel_id);
           
+          let messageAuthor = new User(messageData.author)
           messageData.channel = channel!;
+          messageData.author = messageAuthor;
 
-          const message = new Message(messageData as IMessage);
+          const message = new Message(messageData);
           this.client.emit("messageCreate", message)
           break;
       }
@@ -103,18 +106,17 @@ export class WebsocketNodeClient implements WebsocketClient {
 
   /**
    * Sends a message to Harmony.
-   * @param op The opcode of the message.
    * @param data The data of the message.
    */
-  public async send({ op, data }: { op: OpCodes; data: any }) {
-    this._ws?.send(JSON.stringify({ op, data }));
+  public async send({ data }: { data: any }) {
+    this._ws?.send(JSON.stringify({ ...data }));
   }
 
   private identify() {
     const payload = {
       op: OpCodes.IDENTIFY,
       token: this.client.token,
-      status: "online",
+      status: this.client.config.status,
       device: "desktop",
     };
 

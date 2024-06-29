@@ -1,6 +1,7 @@
 import { Client } from "../client/Client";
 import { IMessage, IUser, MessageAttachment, MessageEmbed } from "../types";
 import { Channel } from "./Channel";
+import { User } from "./User";
 
 /**
  * Represents a message on Adapt.
@@ -39,7 +40,7 @@ export class Message {
   /**
    * The ID of the message author.
    */
-  public readonly author: IUser;
+  public readonly author: User;
 
   /**
    * The type of message it is.

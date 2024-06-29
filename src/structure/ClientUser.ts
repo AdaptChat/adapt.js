@@ -1,3 +1,4 @@
+import { OpCodes } from "../config";
 import { IUser } from "../types";
 import { User } from "./User";
 
@@ -6,17 +7,18 @@ import { User } from "./User";
  */
 export class ClientUser extends User {
   /**
-   * The email of the client user.
-   */
-  public email: string;
-
-  /**
    * Creates a new instance of a ClientUser.
    * @param data The data for the user.
    */
   constructor(data: IUser) {
     super(data);
-    this.email = data.email!;
-
   }
+
+    /**
+   * Sets the presence of the client user.
+   * @param presence The presence to set.
+   */
+    public async setPresence(presence: string) {
+      await this.client.ws.send({ data: { op: OpCodes.PRESENCE, status: presence }});
+    }
 }
