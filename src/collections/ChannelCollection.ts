@@ -10,7 +10,7 @@ export class ChannelCollection extends CacheManager<Channel> {
      * @returns A channel or null if one is not found.
      * @throws Error is thrown if something goes wrong.
      */
-    public async fetch(id: number) {
+    public async fetch(id: bigint) {
         const cached = this.get(id);
         if (cached) return cached;
 

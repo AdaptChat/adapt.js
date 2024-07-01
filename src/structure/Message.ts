@@ -20,7 +20,7 @@ export class Message {
   /**
    * The message's ID.
    */
-  public readonly id: number;
+  public readonly id: bigint;
 
   /**
    * The message's nonce if any.
@@ -30,12 +30,12 @@ export class Message {
   /**
    * The message's channel ID.
    */
-  public readonly channelId: number;
+  public readonly channelId: bigint;
 
   /**
    * The ID of the message author.
    */
-  public readonly authorId: number;
+  public readonly authorId: bigint;
 
   /**
    * The ID of the message author.

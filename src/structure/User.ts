@@ -13,7 +13,7 @@ export class User {
   /**
    * The user's id.
    */
-  public id: number;
+  public id: bigint;
 
   /**
    * The user's avatar.

@@ -11,7 +11,7 @@ export const CDN = "https://convey.adapt.chat";
 /**
  * The default URL that will be used for the WS connection.
  */
-export const GATEWAY = "https://harmony.adapt.chat";
+export const GATEWAY = "wss://harmony.adapt.chat?format=msgpack";
 
 /**
  * The default STATUS that the bot will have.

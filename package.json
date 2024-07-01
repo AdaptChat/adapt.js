@@ -1,6 +1,6 @@
 {
   "name": "adapt.chat",
-  "version": "1.0.1",
+  "version": "1.0.14",
   "description": "The NPM library for interacting with the adapt.chat API.",
   "main": "dist/index",
   "scripts": {
@@ -27,8 +27,10 @@
     "typescript": "^5.5.2"
   },
   "dependencies": {
+    "@msgpack/msgpack": "^3.0.0-beta2",
     "eventemitter2": "^6.4.9",
-    "isomorphic-ws": "^5.0.0"
+    "isomorphic-ws": "^5.0.0",
+    "tiny-msgpack": "^2.2.0"
   },
   "files": [
     "dist"

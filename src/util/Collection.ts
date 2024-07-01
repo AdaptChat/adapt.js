@@ -1,5 +1,5 @@
-export class Collection<T> extends Map<number, T> {
-    filter(predicate: (value: T, key: number, collection: Collection<T>) => boolean): Collection<T> {
+export class Collection<T> extends Map<bigint, T> {
+    filter(predicate: (value: T, key: bigint, collection: Collection<T>) => boolean): Collection<T> {
         const filteredCollection = new Collection<T>();
         for (const [key, value] of this.entries()) {
             if (predicate(value, key, this)) {
@@ -22,12 +22,12 @@ export class Collection<T> extends Map<number, T> {
         super(...args);
     }
 
-    public get(key: number): T | undefined {
+    public get(key: bigint): T | undefined {
         // TODO: Implement LRU System
         return super.get(key);
     }
 
-    public set(key: number, value: T): this {
+    public set(key: bigint, value: T): this {
         // TODO: Implement LRU System
         return super.set(key, value);
     }

@@ -1,4 +1,5 @@
 import WebSocket from "isomorphic-ws";
+import { encode, decode } from "@msgpack/msgpack";
 import { OpCodes } from "../config";
 import { Events, IChannel, IGuild, IMessage, IUser } from "../types";
 import { Client } from "./Client";
@@ -21,10 +22,6 @@ export function chooseClient(client: Client): WebsocketClient {
     return new WebsocketNodeClient(client);
   }
 }
-
-//  export class WebsocketWorkerClient implements WebsocketClient {
-//     Worker client to be used in the future if wanted, better for web environments but node still works.
-//  }
 
 /**
  * Represents a websocket client in node environments.
@@ -50,7 +47,7 @@ export class WebsocketNodeClient implements WebsocketClient {
     });
 
     this._ws!.addEventListener("message", async (message: any) => {
-      const { data, event } = JSON.parse(message.data.toString()) as {
+      const { data, event } = decode(new Uint8Array(message.data), {useBigInt64: true}) as {
         data: any;
         event: Events;
       };
@@ -66,26 +63,26 @@ export class WebsocketNodeClient implements WebsocketClient {
           });
           data.guilds.forEach((guildData: any) => {
             guildData.client = this.client;
-             guildData.channels.forEach((channelData: any) => {
-              const channel = new Channel(channelData)
+            guildData.channels.forEach((channelData: any) => {
+              const channel = new Channel(channelData);
               channel.client = this.client;
               this.client.channels.set(channelData.id, channel);
-             })
-             const guild = new Guild(guildData);
+            });
+            const guild = new Guild(guildData);
             this.client.guilds.set(guildData.id, guild);
-          })
+          });
           this.client.emit("ready", data);
           break;
         case OpCodes.MESSAGE_CREATE:
           let messageData = data.message;
           let channel = this.client.channels.get(messageData.channel_id);
-          
-          let messageAuthor = new User(messageData.author)
+
+          let messageAuthor = new User(messageData.author);
           messageData.channel = channel!;
           messageData.author = messageAuthor;
 
           const message = new Message(messageData);
-          this.client.emit("messageCreate", message)
+          this.client.emit("messageCreate", message);
           break;
       }
     });
@@ -109,7 +106,7 @@ export class WebsocketNodeClient implements WebsocketClient {
    * @param data The data of the message.
    */
   public async send({ data }: { data: any }) {
-    this._ws?.send(JSON.stringify({ ...data }));
+    this._ws?.send(encode(data));
   }
 
   private identify() {
@@ -120,7 +117,7 @@ export class WebsocketNodeClient implements WebsocketClient {
       device: "desktop",
     };
 
-    this._ws?.send(JSON.stringify(payload));
+    this._ws?.send(encode(payload));
   }
 
   private reconnect() {
@@ -140,6 +137,38 @@ export class WebsocketNodeClient implements WebsocketClient {
   }
 
   private sendHeartbeat() {
-    this._ws?.send(JSON.stringify({ op: OpCodes.PING }));
+    this._ws?.send(encode({ op: OpCodes.PING }));
   }
+}
+
+/**
+ * Recursively sanitize snowflakes in the object by converting BigInt to string.
+ * @param json The object to sanitize.
+ */
+export function sanitizeSnowflakes(json: any): any {
+  if (json == null) return json;
+
+  if (typeof json === 'bigint') {
+    return json.toString();
+  }
+
+  if (typeof json === 'object') {
+    if (Array.isArray(json)) {
+      return json.map(sanitizeSnowflakes);
+    }
+
+    for (const [key, value] of Object.entries(json)) {
+      if (typeof value === 'number' && (key.endsWith('_id') || key === 'id')) {
+        json[key] = BigInt(value).toString();
+      } else if (key.endsWith('_id') && Array.isArray(value)) {
+        json[key] = value.map((val: any) =>
+          typeof val === 'number' ? BigInt(val).toString() : sanitizeSnowflakes(val)
+        );
+      } else {
+        json[key] = sanitizeSnowflakes(value);
+      }
+    }
+  }
+
+  return json;
 }

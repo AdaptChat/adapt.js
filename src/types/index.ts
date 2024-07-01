@@ -44,8 +44,8 @@ export interface ReadyEvent {
 }
 
 export interface TypingEvent {
-  channel_id: number;
-  user_id: number;
+  channel_id: bigint;
+  user_id: bigint;
 }
 
 export interface EventMap {
@@ -67,7 +67,7 @@ export interface ApiError {
 
 export interface IUser {
   client: Client;
-  id: number;
+  id: bigint;
   username: string;
   display_name: string;
   avatar: string | null;
@@ -85,12 +85,12 @@ export interface GuildMemberCount {
 export interface IGuild {
   client: Client;
   channels: Channel[];
-  id: number;
+  id: bigint;
   name: string;
   description: string | null;
   icon: string | null;
   banner: string | null;
-  owner_id: number;
+  owner_id: bigint;
   flags: number;
   member_count: GuildMemberCount,
   vanity_url: string | null;
@@ -106,8 +106,8 @@ export interface ChannelCreateOptions {
 export interface IChannel {
   client: Client;
   guild: Guild | null;
-  id: number;
-  guild_id: number | null;
+  id: bigint;
+  guild_id: bigint | null;
   type: string;
   topic: string | null;
   nsfw: boolean;
@@ -119,10 +119,40 @@ export interface IChannel {
   icon: string | null;
   position: number;
   overwrites: [];
-  parent_id: number | null;
+  parent_id: bigint | null;
 }
 
-export interface MessageEmbed {}
+export interface MessageEmbedAuthor {
+  icon_url: string | null;
+  name: string;
+  url: string | null;
+}
+
+export interface MessageEmbedField {
+  align?: "left" | "center" | "right" | "inline";
+  name: string;
+  value: string;
+}
+
+export interface MessageEmbedFooter {
+  icon_url?: string;
+  text: string;
+}
+
+export interface MessageEmbed {
+  author?: MessageEmbedAuthor;
+  color?: number;
+  description?: string;
+  fields?: MessageEmbedField[];
+  footer?: MessageEmbedFooter;
+  hue?: number;
+  image?: string;
+  thumbnail?: string;
+  timestamp?: string | Date;
+  title?: string;
+  type: "rich" | "image" | "video" | "meta";
+  url?: string;
+}
 
 export interface MessageAttachment {
   alt: string;
@@ -132,10 +162,10 @@ export interface MessageAttachment {
 export interface IMessage {
   client: Client;
   channel: Channel;
-  id: number;
+  id: bigint;
   nonce: string | null;
-  channel_id: number;
-  author_id: number;
+  channel_id: bigint;
+  author_id: bigint;
   author: User;
   type: string;
   content: string;
@@ -149,8 +179,9 @@ export interface IMessage {
 }
 
 export interface CreateMessageOptions {
-  content: string;
-  embeds?: object[];
+  content?: string;
+  embeds?: MessageEmbed[];
+  attachments?: MessageAttachment[];
   nonce?: string;
   references?: object[];
 }

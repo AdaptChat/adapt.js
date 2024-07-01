@@ -13,15 +13,15 @@ export class CacheManager<T> {
      */
     constructor(public client: Client) { }
 
-    public get(id: number): T | null {
+    public get(id: bigint): T | null {
         return this._cache.get(id) || null;
     }
 
-    public set(id: number, data: T) {
+    public set(id: bigint, data: T) {
         this._cache.set(id, data);
     }
 
-    public delete(id: number) {
+    public delete(id: bigint) {
         this._cache.delete(id);
     }
 
@@ -29,7 +29,7 @@ export class CacheManager<T> {
         this._cache.clear();
     }
 
-    public has(id: number) {
+    public has(id: bigint) {
         return this._cache.has(id);
     }
 
@@ -53,13 +53,13 @@ export class CacheManager<T> {
         return this._cache.entries();
     }
 
-    public forEach(fn: (value: T, key: number, map: Map<number, T>) => void) {
+    public forEach(fn: (value: T, key: bigint, map: Map<bigint, T>) => void) {
         this._cache.forEach((value, key) => {
             fn(value, key, this._cache);
         });
     }
 
-    public map(fn: (value: T, key: number, collection: Collection<T>) => any, filterFn?: (value: T, key: number, collection: Collection<T>) => boolean, sortFn?: (a: T, b: T) => number) {
+    public map(fn: (value: T, key: bigint, collection: Collection<T>) => any, filterFn?: (value: T, key: bigint, collection: Collection<T>) => boolean, sortFn?: (a: T, b: T) => number) {
         const elements: any[] = [];
 
         let filteredCache = this._cache;
