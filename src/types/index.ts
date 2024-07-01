@@ -123,9 +123,9 @@ export interface IChannel {
 }
 
 export interface MessageEmbedAuthor {
-  icon_url: string | null;
+  icon_url?: string | null;
   name: string;
-  url: string | null;
+  url?: string | null;
 }
 
 export interface MessageEmbedField {

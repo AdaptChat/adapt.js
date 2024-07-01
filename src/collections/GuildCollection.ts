@@ -5,9 +5,9 @@ import { CacheManager } from "./CacheManager";
 export class GuildCollection extends CacheManager<IGuild> {
 
    /**
-     * Get a channel from cache or fetch one if it isn't cached.
-     * @param id The id of the channel.
-     * @returns A channel or null if one is not found.
+     * Get a guild from cache or fetch one if it isn't cached.
+     * @param id The id of the guild.
+     * @returns A guild or null if one is not found.
      * @throws Error is thrown if something goes wrong.
      */
    public async fetch(id: bigint) {
@@ -27,9 +27,9 @@ export class GuildCollection extends CacheManager<IGuild> {
     if (!res.ok) throw new Error(`${res.status} ${(data as ApiError).message}`);
 
     data.client = this.client;
-    const channel = new Guild(data);
-    this.set(channel.id, channel);
-    return channel;
+    const guild = new Guild(data);
+    this.set(guild.id, guild);
+    return guild;
 }
 
     /**

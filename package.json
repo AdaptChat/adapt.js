@@ -1,6 +1,6 @@
 {
   "name": "adapt.chat",
-  "version": "1.0.16",
+  "version": "1.0.18",
   "description": "The NPM library for interacting with the adapt.chat API.",
   "main": "dist/index",
   "scripts": {

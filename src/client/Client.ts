@@ -5,6 +5,7 @@ import { API, CDN, GATEWAY, STATUS } from "../config";
 import { ClientUser } from "../structure/ClientUser";
 import { GuildCollection } from "../collections/GuildCollection";
 import { ChannelCollection } from "../collections/ChannelCollection";
+import { UserCollection } from "../collections/UserCollection";
 
 /**
  * The main hub for interacting with Adapt.
@@ -42,6 +43,11 @@ export class Client extends EventEmitter2 {
    * The channels cached on the client.
    */
   public channels = new ChannelCollection(this);
+
+  /**
+   * The users cached on the client.
+   */
+  public users = new UserCollection(this);
 
   /**
    * Attaches a listener for the specified event.
