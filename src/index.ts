@@ -7,3 +7,4 @@ export * from "./structure/User";
 export * from "./structure/Channel";
 export * from "./structure/Guild";
 export * from "./structure/Message";
+export * from "./util/EmbedBuilder";
