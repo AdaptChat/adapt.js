@@ -19,7 +19,7 @@ export class Guild {
   /**
    * The guild's id.
    */
-  public readonly id: bigint;
+  public readonly id: string;
 
   /**
    * The guild's name.
@@ -44,7 +44,7 @@ export class Guild {
   /**
    * The ID of the guild's owner.
    */
-  public readonly owner_id: bigint;
+  public readonly owner_id: string;
 
   /**
    * The guild's flags.

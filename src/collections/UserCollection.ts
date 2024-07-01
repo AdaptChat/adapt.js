@@ -10,11 +10,11 @@ export class UserCollection extends CacheManager<User> {
      * @returns A user or null if one is not found.
      * @throws Error is thrown if something goes wrong.
      */
-    public async fetch(id: bigint) {
+    public async fetch(id: string) {
         const cached = this.get(id);
         if (cached) return cached;
 
-        const res = await fetch(`${this.client.config.api}/user/${id}`, {
+        const res = await fetch(`${this.client.config.api}/users/${id}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `${this.client.token}`

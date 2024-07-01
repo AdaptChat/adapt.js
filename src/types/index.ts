@@ -44,8 +44,8 @@ export interface ReadyEvent {
 }
 
 export interface TypingEvent {
-  channel_id: bigint;
-  user_id: bigint;
+  channel_id: string;
+  user_id: string;
 }
 
 export interface EventMap {
@@ -67,7 +67,7 @@ export interface ApiError {
 
 export interface IUser {
   client: Client;
-  id: bigint;
+  id: string;
   username: string;
   display_name: string;
   avatar: string | null;
@@ -85,12 +85,12 @@ export interface GuildMemberCount {
 export interface IGuild {
   client: Client;
   channels: Channel[];
-  id: bigint;
+  id: string;
   name: string;
   description: string | null;
   icon: string | null;
   banner: string | null;
-  owner_id: bigint;
+  owner_id: string;
   flags: number;
   member_count: GuildMemberCount,
   vanity_url: string | null;
@@ -106,8 +106,8 @@ export interface ChannelCreateOptions {
 export interface IChannel {
   client: Client;
   guild: Guild | null;
-  id: bigint;
-  guild_id: bigint | null;
+  id: string;
+  guild_id: string | null;
   type: string;
   topic: string | null;
   nsfw: boolean;
@@ -119,7 +119,7 @@ export interface IChannel {
   icon: string | null;
   position: number;
   overwrites: [];
-  parent_id: bigint | null;
+  parent_id: string | null;
 }
 
 export interface MessageEmbedAuthor {
@@ -162,10 +162,10 @@ export interface MessageAttachment {
 export interface IMessage {
   client: Client;
   channel: Channel;
-  id: bigint;
+  id: string;
   nonce: string | null;
-  channel_id: bigint;
-  author_id: bigint;
+  channel_id: string;
+  author_id: string;
   author: User;
   type: string;
   content: string;

@@ -20,12 +20,12 @@ export class Channel {
   /**
    * The channels's ID.
    */
-  public readonly id: bigint;
+  public readonly id: string;
 
   /**
    * The ID of the guild the channel's in, if any.
    */
-  public readonly guildId: bigint | null;
+  public readonly guildId: string | null;
 
   /**
    * The type of channel it is, ex: dm, text or voice.
@@ -85,7 +85,7 @@ export class Channel {
   /**
    * The ID of the channel's category, if any.
    */
-  public readonly parentId: bigint | null;
+  public readonly parentId: string | null;
 
   /**
    * Creates a new instance of a channel.
