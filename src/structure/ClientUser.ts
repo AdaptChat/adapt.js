@@ -1,5 +1,5 @@
 import { OpCodes } from "../config";
-import { IUser } from "../types";
+import { IUser, UpdatePresenceOptions } from "../types";
 import { User } from "./User";
 
 /**
@@ -14,11 +14,17 @@ export class ClientUser extends User {
     super(data);
   }
 
-    /**
+  /**
    * Sets the presence of the client user.
    * @param presence The presence to set.
    */
-    public async setPresence(presence: string) {
-      await this.client.ws.send({ data: { op: OpCodes.PRESENCE, status: presence }});
-    }
+  public async setPresence(data: UpdatePresenceOptions) {
+    await this.client.ws.send({
+      data: {
+        op: OpCodes.PRESENCE,
+        status: data.status,
+        custom_status: data.custom_status,
+      },
+    });
+  }
 }

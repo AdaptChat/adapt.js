@@ -75,7 +75,7 @@ export class Message {
   /**
    * Mentions in the message.
    */
-  public readonly mentions: [];
+  public readonly mentions: string[];
 
   /**
    * When the message was last edited at.

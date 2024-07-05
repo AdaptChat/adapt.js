@@ -103,6 +103,11 @@ export interface ChannelCreateOptions {
   parent_id?: string;
 }
 
+export interface UpdatePresenceOptions {
+  status: "online" | "idle" | "dnd" | "offline";
+  custom_status?: string;
+}
+
 export interface IChannel {
   client: Client;
   guild: Guild | null;
@@ -173,7 +178,7 @@ export interface IMessage {
   attachments: MessageAttachment[];
   flags: number;
   stars: number;
-  mentions: [];
+  mentions: string[];
   edited_at: number | null;
   references: object[];
 }
